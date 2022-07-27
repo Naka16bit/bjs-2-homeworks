@@ -8,26 +8,20 @@ class AlarmClock {
         if (id === undefined) {
             throw new Error("Параметр не передан");
         }
-
         if (this.alarmCollection.find(item => item.id === id)) {
             console.error("Будильник с таким id уже существует");
             return
         }
-
-        let clock = {};
-        this.alarmCollection.push(clock);
-        clock.time = time;
-        clock.callback = callback;
-        clock.id = id;
+        this.alarmCollection.push({time, callback, id});
     }
 
     removeClock(id) {
         let i = this.alarmCollection.findIndex(item => item.id === id);
-        this.alarmCollection.splice(i, 1);
-        if (i === undefined) {
-            return false;
-        } else {
+        if (i !== -1) {
+            this.alarmCollection.splice(i, 1);
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -84,6 +78,8 @@ function testCase() {
     phoneAlarm.printAlarms();
 
     phoneAlarm.start();
+
 }
 
 testCase();
+
